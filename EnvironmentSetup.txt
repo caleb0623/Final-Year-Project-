@@ -1,0 +1,6 @@
+1. install cuda pre-requisite
+2. pip install -r requirement.txt
+3. pip install pyrebase4
+4. pip install yagmail
+5. pip install tkcalendar
+6. pip install --upgrade firebase-admin

@@ -1,0 +1,39 @@
+conda activate new
+
+cd desktop/test_file/yolov7
+
+python train.py --workers 4 --batch 8 --epochs 35 --data C:/Users/User/Desktop/test_file/yolov7/Assembled-3/data.yaml --cfg cfg/training/yolov7_custom.yaml --weights 'yolov7_training.pt' --device 0
+
+#need to change the number of classes in training/yolov7-tiny_custom.yaml accordingly based on our number of classes 
+
+#here is to use the weights we trained before
+python train.py --workers 4 --batch 8 --epochs 200 --data C:/Users/User/Desktop/test_file/yolov7/Assembled-3/data.yaml --cfg cfg/training/yolov7_custom.yaml --weights runs\train\exp32\weights\first35.pt --device 0 
+
+#freeze the backbone of yolov7 which is 50
+python train.py --workers 4 --batch 8 --epochs 250 --data C:/Users/User/Desktop/test_file/yolov7/Assembled-3/data.yaml --cfg cfg/training/yolov7_custom.yaml --weights yolov7_training.pt --device 0 --freeze 50
+
+
+#freeze the backbone of yolovy tiny which is 28, apply early stopping for 10% of total number of epoch
+python train.py --workers 4 --batch 16 --epochs 250 --patience 20 --data C:/Users/User/Desktop/test_file/yolov7/Assembled-3/data.yaml --cfg cfg/training/yolov7-tiny_custom.yaml --weights yolov7-tiny.pt --device 0 --freeze 28 --name 'yolov7-tiny-earlystop'
+
+python train.py --workers 4 --batch 16 --epochs 250 --patience 25 --data C:/Users/User/Desktop/test_file/yolov7/Assembled-5/data.yaml --cfg cfg/training/yolov7-tiny_custom.yaml --weights yolov7-tiny.pt --device 0 --freeze 28 --name 'yolov7-tiny' --hyp data/hyp.scratch.p5_noMosaic.yaml 
+
+
+#resume training
+python train.py --resume 
+
+
+
+#for testing 
+python test.py --data C:/Users/User/Desktop/test_file/yolov7/Assembled-5/data.yaml --img 640 --batch 16 --conf 0.5 --iou 0.45 --device 0 --weights best.pt --name yolov7_tiny_noAug --task test
+
+#for detection
+python detect.py --weights best2.pt --conf 0.5 --img-size 640 --source testImage\test.png --no-trace --save-txt --project myfile --exist
+
+python detect.py --weights best.pt --conf 0.5 --img-size 640 --source crop.mp4 --no-trace --exist --save-txt --project myfile
+
+python detect_custom.py --weights best.pt --conf 0.5 --img-size 640 --source testImage\short.jpeg --no-trace --save-txt --project myfile --exist
+
+python detect_testLoad.py --weights best.pt --conf 0.5 --img-size 640 --source testImage\short.jpeg --no-trace --save-txt --project myfile --exist --name short
+
+python detect_cleaning.py --weights best.pt --conf 0.5 --img-size 640 --source testImage\test.png --no-trace --save-txt --project myfile --exist --name test

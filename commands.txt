@@ -1,0 +1,11 @@
+python detect.py --weights best.pt --conf 0.5 --img-size 640 --source 0 --save-txt --no-trace
+
+  File "C:\Users\Lee Khar Seng\Desktop\demo_webcam\yolov7\detect.py", line 196, in <module>
+    detect()
+  File "C:\Users\Lee Khar Seng\Desktop\demo_webcam\yolov7\detect.py", line 70, in detect
+    for path, img, im0s, vid_cap in dataset:
+  File "C:\Users\Lee Khar Seng\Desktop\demo_webcam\yolov7\utils\datasets.py", line 327, in
+__next__
+    if cv2.waitKey(1) == ord('q'):  # q to quit
+KeyboardInterrupt
+^C

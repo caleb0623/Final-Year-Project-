@@ -1,0 +1,26 @@
+step 1: install cuda 11.6
+
+step 2 open anaconda
+
+step 3 activate environment
+
+step 4 !pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu116
+
+
+
+#write in conda
+#in pytorch page under wheel
+#pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu116
+
+must have +cu116 or else the pytorch would not interact with gpu and it would throw an error called Cuda device not found.
+
+
+can pip uninstall roboflow if it doesnt work correctly, then pip install roboflow again. in anaconda console (cmd)
+
+
+Steps before training yolov7:
+1.	Install cuda 11.6 (cu116)
+2.	step 2 open anaconda
+3.	step 3 create and activate environment
+4.	step 4 pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu11
+5.	go to yolov7/cfg/training/yolov7.yaml modify the first line, nc = 80 to nc = no. of class.

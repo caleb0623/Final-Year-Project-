@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/loginFragment"
+        android:checkable="true"
+        android:icon="@drawable/ic_login"
+        android:title="Login" />
+
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/homeFragment"
+            android:checkable="true"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+    </group>
+
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/page2Fragment"
+            android:icon="@drawable/registration_icon"
+            android:title="Register Customer Account" />
+    </group>
+
+
+</menu>

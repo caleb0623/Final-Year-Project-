@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/todayBlockedFragment">
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.firebasedemo2.ui.Notification.NotificationFragment"
+        android:label="Notification List"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.example.firebasedemo2.ui.Notification.Notification"
+        android:label="list"
+        tools:layout="@layout/fragment_notificationhome" />
+    <fragment
+        android:id="@+id/blockedFragment"
+        android:name="com.example.firebasedemo2.ui.Notification.BlockedListFragment"
+        android:label="Blocked Student List History"
+        tools:layout="@layout/fragment_blockedlist" />
+    <fragment
+        android:id="@+id/todayBlockedFragment"
+        android:name="com.example.firebasedemo2.ui.Notification.TodayBlockedListFragment"
+        android:label="Blocked Student List"
+        tools:layout="@layout/fragment_todayblockedlist" />
+    <fragment
+        android:id="@+id/todayReturnFragment"
+        android:name="com.example.firebasedemo2.ui.Notification.TodayReturnListFragment"
+        android:label="Return Student List"
+        tools:layout="@layout/fragment_todayreturnlist" />
+    <fragment
+        android:id="@+id/studentdetailFragment"
+        android:name="com.example.firebasedemo2.ui.Notification.StudentDetailFragment"
+        android:label="Student Detail"
+        tools:layout="@layout/fragment_student_detail" />
+    <fragment
+        android:id="@+id/lecturerdetailFragment"
+        android:name="com.example.firebasedemo2.ui.Notification.LecturerDetails"
+        android:label="Lecturer Detail"
+        tools:layout="@layout/fragment_lecturer_details" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.firebasedemo2.ui.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+</navigation>
