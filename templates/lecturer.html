@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>{{ {"today": "Today", "returns": "Returns", "history": "History"}[page] }} · Attire Checker</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='web.css') }}">
+  <script src="{{ url_for('static', filename='common.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='lecturer.js') }}" defer></script>
+</head>
+<body data-page="{{ page }}" data-today="{{ today }}">
+  <div class="app-shell">
+{% include "_sidebar.html" %}
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb">Lecturer <span>/</span> {{ {"today": "Today", "returns": "Returns", "history": "History"}[page] }}</div>
+        <div class="today-pill"><span class="status-dot"></span> {{ today }}</div>
+      </header>
+
+      {% if page == "today" %}
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">MY STUDENTS · TODAY</p>
+          <h1>Blocked students today</h1>
+          <p class="muted">Students in your classes who were stopped for an attire violation today. Select a row for details.</p>
+        </div>
+        <div class="action-group">
+          <a class="button button-outline" href="{{ url_for('lecturer_returns') }}">↩ Today's returns</a>
+          <a class="button button-dark" href="https://web.tarc.edu.my/portal/login.jsp" target="_blank" rel="noopener">TAR UMT Intranet ↗</a>
+        </div>
+      </section>
+      <section class="stat-grid stat-grid-two" aria-label="Today's summary">
+        <article class="stat-card"><div class="stat-top"><span>Blocked today</span><span class="stat-icon coral">▤</span></div><strong id="blocked-count">—</strong><small>Students from your classes</small></article>
+        <article class="stat-card"><div class="stat-top"><span>Returned today</span><span class="stat-icon blue">↩</span></div><strong id="returned-count">—</strong><small>Came back properly dressed</small></article>
+      </section>
+      <section class="panel records-panel">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>PHOTO</th><th>STUDENT ID</th><th>STUDENT NAME</th><th>TIME</th><th>BLOCKED ID</th></tr></thead>
+            <tbody id="list-rows"><tr><td colspan="5" class="table-message">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="list-summary">—</span><span>Refreshes every 15 seconds</span></footer>
+      </section>
+
+      {% elif page == "returns" %}
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">MY STUDENTS · RETURNS</p>
+          <h1>Returned students</h1>
+          <p class="muted">Blocked students from your classes who came back with proper attire.</p>
+        </div>
+      </section>
+      <section class="panel records-panel">
+        <form class="report-form" id="date-form">
+          <label>Date<input type="date" id="list-date" max="{{ today }}" value="{{ today }}" required></label>
+          <button class="button button-primary" type="submit">Show</button>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>RETURN ID</th><th>STUDENT ID</th><th>STUDENT NAME</th><th>TIME</th><th>GUARD ID</th></tr></thead>
+            <tbody id="list-rows"><tr><td colspan="5" class="table-message">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="list-summary">—</span><span>Source: returns</span></footer>
+      </section>
+
+      {% else %}
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">HISTORY</p>
+          <h1>Blocked students per day</h1>
+          <p class="muted">Choose a date range, then view the blocked list of any day.</p>
+        </div>
+      </section>
+      <section class="panel records-panel">
+        <form class="report-form" id="history-form">
+          <label>Start date<input type="date" id="history-start" max="{{ today }}"></label>
+          <label>End date<input type="date" id="history-end" max="{{ today }}" value="{{ today }}"></label>
+          <button class="button button-primary" type="submit">Search</button>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>DATE</th><th>TOTAL BLOCKED</th><th>ACTION</th></tr></thead>
+            <tbody id="history-rows"><tr><td colspan="3" class="table-message">Loading…</td></tr></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="history-summary">—</span><span>Source: notification</span></footer>
+      </section>
+      <dialog id="day-modal" class="modal wide-modal">
+        <div class="modal-heading"><div><p class="eyebrow">BLOCKED LIST</p><h2 id="day-title"></h2></div><button class="icon-button" id="close-day" type="button" aria-label="Close">×</button></div>
+        <p class="muted">Only students from your classes are listed.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>PHOTO</th><th>STUDENT ID</th><th>STUDENT NAME</th><th>TIME</th><th>BLOCKED ID</th></tr></thead>
+            <tbody id="list-rows"></tbody>
+          </table>
+        </div>
+      </dialog>
+      {% endif %}
+
+      <dialog id="student-modal" class="modal">
+        <div class="modal-heading"><div><p class="eyebrow">STUDENT DETAILS</p><h2 id="student-title"></h2></div><button class="icon-button" id="close-student" type="button" aria-label="Close">×</button></div>
+        <div class="violation-body">
+          <img id="student-photo" class="violation-photo" alt="Photo taken when the student was blocked" hidden>
+          <div id="student-no-photo" class="violation-photo violation-no-photo">No photo</div>
+          <dl class="detail-list" id="student-details"></dl>
+        </div>
+      </dialog>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+</body>
+</html>

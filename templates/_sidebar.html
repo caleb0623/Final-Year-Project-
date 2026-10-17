@@ -1,0 +1,26 @@
+{% set nav = {
+  "admin": [("students", "admin_students", "◎", "Students & faces"), ("guards", "admin_guards", "⛨", "Security guards"),
+            ("reports", "admin_reports", "▤", "Reports"), ("profile", "profile", "☺", "Profile")],
+  "security": [("monitoring", "dashboard", "▦", "Monitoring"), ("profile", "profile", "☺", "Profile")],
+  "lecturer": [("today", "lecturer_today", "▦", "Today"), ("returns", "lecturer_returns", "↩", "Returns"),
+               ("history", "lecturer_history", "◷", "History"), ("profile", "profile", "☺", "Profile")],
+}[role] %}
+    <aside class="sidebar">
+      <a class="brand-logo-wrap" href="{{ url_for(nav[0][1]) }}">
+        <img class="brand-logo" src="{{ url_for('static', filename='tarumt-logo.png') }}" alt="TAR UMT">
+        <small>ATTIRE CHECKER</small>
+      </a>
+      <p class="nav-caption">{{ role_label|upper }}</p>
+      <nav class="nav-links" aria-label="Main">
+        {% for key, endpoint, icon, label in nav %}
+        <a class="nav-link{% if active == key %} nav-link-active{% endif %}" href="{{ url_for(endpoint) }}"{% if active == key %} aria-current="page"{% endif %}><span class="nav-icon">{{ icon }}</span> {{ label }}</a>
+        {% endfor %}
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="guard-card"><span class="guard-avatar">{{ (account_name or account_id)[:2]|upper }}</span><span><strong>{{ account_name or account_id }}</strong><small>{{ account_id }} · {{ role_label }}</small></span></div>
+        <form method="post" action="{{ url_for('logout') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button class="button button-quiet button-wide" type="submit">Sign out</button>
+        </form>
+      </div>
+    </aside>

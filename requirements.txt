@@ -1,0 +1,28 @@
+# Usage: pip install -r requirements.txt
+# Everything the Attire Checker website needs (see README.md).
+
+# Web app + Supabase (Postgres via SQLAlchemy/psycopg; Storage via REST)
+Flask>=3.0.0
+SQLAlchemy>=2.0.0
+psycopg[binary]>=3.2.0
+python-dotenv>=1.0.1
+
+# Face recognition (YuNet + SFace)
+numpy>=1.23.0,<2.0
+opencv-contrib-python-headless>=4.8.0
+
+# YOLOv7 attire detection (models/, utils/). torch 2.6+ changes torch.load defaults and
+# cannot load the YOLOv7 checkpoints, so stay below it.
+torch>=1.12.0,<2.6
+torchvision>=0.13.0,<0.21
+PyYAML>=5.3.1
+scipy>=1.4.1
+tqdm>=4.41.0
+requests>=2.23.0
+Pillow>=9.0.0
+matplotlib>=3.2.2
+pandas>=1.1.4
+seaborn>=0.11.0
+
+# Production server for running on Windows behind Cloudflare Tunnel (serve.py)
+waitress>=3.0.0

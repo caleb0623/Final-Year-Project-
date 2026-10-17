@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.User.VerifyFragment">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:paddingHorizontal="8dp"
+        android:text="Enter the code\nfrom the email we just sent you"
+        android:textAlignment="center"
+        android:textColor="#333"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close"
+
+        android:backgroundTint="@android:color/holo_blue_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAdd"
+        app:layout_constraintTop_toBottomOf="@+id/edt3" />
+
+
+    <EditText
+        android:id="@+id/edt1"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/search_background"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintEnd_toStartOf="@+id/edt2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/edt2"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/search_background"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/edt3"
+        app:layout_constraintStart_toEndOf="@+id/edt1"
+        app:layout_constraintTop_toTopOf="@+id/edt1" />
+
+    <EditText
+        android:id="@+id/edt3"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/search_background"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/edt4"
+        app:layout_constraintStart_toEndOf="@+id/edt2"
+        app:layout_constraintTop_toTopOf="@+id/edt1" />
+
+    <EditText
+        android:id="@+id/edt4"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/search_background"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/edt3"
+        app:layout_constraintEnd_toStartOf="@+id/edt5"
+        app:layout_constraintTop_toTopOf="@+id/edt1" />
+
+    <EditText
+        android:id="@+id/edt5"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/search_background"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/edt4"
+        app:layout_constraintEnd_toStartOf="@+id/edt6"
+        app:layout_constraintTop_toTopOf="@+id/edt1" />
+
+    <EditText
+        android:id="@+id/edt6"
+        android:layout_width="0dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/search_background"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        app:layout_constraintStart_toEndOf="@+id/edt5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edt1" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

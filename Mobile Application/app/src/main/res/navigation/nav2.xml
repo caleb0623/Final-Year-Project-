@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav2"
+    app:startDestination="@id/securityhome">
+
+    <fragment
+        android:id="@+id/securityhome"
+        android:name="com.example.firebasedemo2.ui.Security.SecurityFragment"
+        android:label="Guard List"
+        tools:layout="@layout/fragment_securityhome" />
+    <fragment
+        android:id="@+id/securitydetailFragment"
+        android:name="com.example.firebasedemo2.ui.Security.SecurityDetailFragment"
+        android:label="Guard Details"
+        tools:layout="@layout/fragment_securitydetail" />
+    <fragment
+        android:id="@+id/securityeditFragment"
+        android:name="com.example.firebasedemo2.ui.Security.SecurityEditFragment"
+        android:label="Edit Guard Details"
+        tools:layout="@layout/fragment_securityedit" />
+    <fragment
+        android:id="@+id/addsgFragment"
+        android:name="com.example.firebasedemo2.ui.Security.AddSGFragment"
+        android:label="Add Security Guard "
+        tools:layout="@layout/fragment_addsg" />
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.example.firebasedemo2.ui.Security.AdminFragment"
+        android:label="Admin Detail "
+        tools:layout="@layout/fragment_admin_profile" />
+    <dialog
+        android:id="@+id/deleteconfirmFragment"
+        android:name="com.example.firebasedemo2.ui.Security.DeleteFragment"
+        android:label="Delete "
+        tools:layout="@layout/fragment_deleteconfirm" />
+
+</navigation>

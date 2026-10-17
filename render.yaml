@@ -1,0 +1,19 @@
+# Render Blueprint (optional). Note: the free plan has 512 MB RAM / 0.1 CPU, which is tight for
+# PyTorch + YOLO; use at least the Starter plan, or deploy the same Dockerfile to Hugging Face Spaces.
+services:
+  - type: web
+    name: attire-checker
+    runtime: docker
+    plan: starter
+    healthCheckPath: /
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: student-faces
+      - key: ATTIRE_WEB_SECRET
+        generateValue: true

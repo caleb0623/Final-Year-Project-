@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Attire Checker · Dashboard</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='web.css') }}">
+  <script src="{{ url_for('static', filename='web.js') }}" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+{% include "_sidebar.html" %}
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb">Security <span>/</span> Monitoring</div>
+        <div class="today-pill"><span class="status-dot"></span> {{ guard_id }} <span class="pill-divider">·</span> Today</div>
+      </header>
+
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">SECURITY OPERATIONS</p>
+          <h1>Good day{% if guard_name %}, {{ guard_name }}{% endif %}</h1>
+          <p class="muted">Review and manage today's attire violation records.</p>
+        </div>
+        <button class="button button-dark" id="open-camera" type="button"><span aria-hidden="true">◉</span> Open camera</button>
+      </section>
+
+      <section class="stat-grid" aria-label="Today's overview">
+        <article class="stat-card">
+          <div class="stat-top"><span>Today's blocked records</span><span class="stat-icon coral">▤</span></div>
+          <strong id="record-count">—</strong>
+          <small>Assigned to your guard account</small>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Current date</span><span class="stat-icon blue">◷</span></div>
+          <strong id="current-date">—</strong>
+          <small>Records are stored in Supabase</small>
+        </article>
+        <article class="stat-card stat-card-note">
+          <div class="stat-top"><span>Monitoring</span><span class="status-dot"></span></div>
+          <strong class="stat-label">Ready when you are</strong>
+          <small>Open the camera to start face recognition and attire scanning.</small>
+        </article>
+      </section>
+
+      <section class="panel records-panel">
+        <div class="panel-heading">
+          <div><h2>Blocked student records</h2><p class="muted">Today's records for {{ guard_id }}</p></div>
+          <button class="button button-outline" id="refresh-records" type="button">↻ <span>Refresh</span></button>
+        </div>
+        <div class="toolbar">
+          <form class="search-form" id="search-form">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="search-student" name="student_id" autocomplete="off" placeholder="Search by student ID">
+            <button class="button button-search" type="submit">Search</button>
+          </form>
+          <div class="action-group">
+            <button class="button button-primary" id="open-add" type="button"><span>＋</span> Add record</button>
+            <button class="button button-outline" id="open-update" type="button" disabled>Update</button>
+            <button class="button button-danger-outline" id="delete-record" type="button" disabled>Remove</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>BLOCKED ID</th><th>TIME STAMP</th><th>STUDENT NAME</th><th>STUDENT ID</th><th>GUARD ID</th></tr></thead>
+            <tbody id="record-rows"><tr><td colspan="5" class="table-message">Loading today's records…</td></tr></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="table-summary">Loading records</span><span>Live data · Supabase</span></footer>
+      </section>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <dialog class="modal" id="record-modal">
+    <form id="record-form" method="dialog">
+      <div class="modal-heading"><div><p class="eyebrow" id="modal-eyebrow">NEW RECORD</p><h2 id="modal-title">Add blocked student</h2></div><button class="icon-button" value="cancel" aria-label="Close">×</button></div>
+      <p class="muted" id="modal-description">Enter the student ID to add them to today's blocked list.</p>
+      <label for="modal-student-id">Student ID</label>
+      <input id="modal-student-id" name="student_id" placeholder="e.g. 22WMR00001" autocomplete="off" required>
+      <div class="modal-actions"><button class="button button-outline" value="cancel">Cancel</button><button class="button button-primary" id="save-record" type="submit">Add record</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal camera-modal" id="camera-modal">
+    <div class="modal-heading"><div><p class="eyebrow">MONITORING</p><h2>Face recognition &amp; attire scan</h2></div><button class="icon-button" id="close-camera" aria-label="Close">×</button></div>
+    <div class="camera-frame" id="camera-frame"><video id="camera-video" autoplay muted playsinline></video><canvas id="camera-overlay" class="camera-overlay" aria-hidden="true"></canvas><div id="camera-placeholder" class="camera-placeholder"><span>◉</span><p>Allow camera access to start recognition and attire detection.</p></div></div>
+    <p id="camera-status" class="camera-status" role="status">Camera frames are processed by the server; only acknowledged or revoked frames are saved.</p>
+    <p class="muted camera-note">Recognized students are scanned for improper attire. A violation raises an alert; a blocked student who returns properly dressed is removed from today's list automatically.</p>
+  </dialog>
+
+  <dialog class="modal violation-modal" id="violation-modal" aria-labelledby="violation-title">
+    <div class="modal-heading"><div><p class="eyebrow alert-eyebrow">ALERT</p><h2 id="violation-title">Violation detected</h2></div></div>
+    <p class="muted">Please acknowledge or revoke the violation.</p>
+    <div class="violation-body">
+      <img id="violation-photo" class="violation-photo" alt="Enrolled photo of the student" hidden>
+      <div id="violation-no-photo" class="violation-photo violation-no-photo">No enrolled photo</div>
+      <dl class="violation-details">
+        <dt><label for="violation-student-id">Student ID</label></dt>
+        <dd><input id="violation-student-id" autocomplete="off"><small class="muted">Wrong student? Type the ID and press Enter.</small></dd>
+        <dt>Student name</dt>
+        <dd id="violation-student-name">—</dd>
+        <dt>Reason</dt>
+        <dd id="violation-reason" class="violation-reason">—</dd>
+      </dl>
+    </div>
+    <div class="modal-actions">
+      <button class="button button-outline" id="revoke-violation" type="button">Revoke</button>
+      <button class="button button-primary" id="acknowledge-violation" type="button">Acknowledge &amp; block</button>
+    </div>
+  </dialog>
+  <audio id="alarm" src="{{ url_for('static', filename='alarm.wav') }}" loop preload="auto"></audio>
+</body>
+</html>

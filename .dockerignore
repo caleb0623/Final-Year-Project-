@@ -1,0 +1,12 @@
+.git
+.venv
+.env
+*.db
+__pycache__
+**/__pycache__
+models/*.onnx
+models/*.pt
+Mobile Application
+Assembled-5
+tests
+*.json

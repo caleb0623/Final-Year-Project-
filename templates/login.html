@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in · Attire Checker</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='web.css') }}">
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <img class="login-logo" src="{{ url_for('static', filename='tarumt-logo.png') }}" alt="Tunku Abdul Rahman University of Management and Technology">
+    <p class="eyebrow">TARUMT · CAMPUS SECURITY</p>
+    <h1>Attire Checker</h1>
+    <p class="muted">Sign in with your campus account.</p>
+    {% if error %}<div class="notice notice-error" role="alert">{{ error }}</div>{% endif %}
+    <form method="post" class="login-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="role">Account type</label>
+      <select id="role" name="role">
+        <option value="security">Security guard</option>
+        <option value="admin">Administrator</option>
+        <option value="lecturer">Lecturer</option>
+      </select>
+      <label for="account-id">Account ID</label>
+      <input id="account-id" name="account_id" autocomplete="username" placeholder="e.g. SG00001, AD001, L00001" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button class="button button-primary button-wide" type="submit">Sign in</button>
+    </form>
+    <p class="login-footnote"><a href="{{ url_for('forgot_password') }}">Forgot password?</a></p>
+  </main>
+</body>
+</html>

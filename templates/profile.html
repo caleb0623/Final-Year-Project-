@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>Profile · Attire Checker</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='web.css') }}">
+  <script src="{{ url_for('static', filename='common.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='account.js') }}" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+{% include "_sidebar.html" %}
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb">{{ role_label }} <span>/</span> Profile</div>
+        <div class="today-pill"><span class="status-dot"></span> {{ account_id }}</div>
+      </header>
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">MY ACCOUNT</p>
+          <h1>{{ account_name or account_id }}</h1>
+          <p class="muted">{{ role_label }}</p>
+        </div>
+      </section>
+      <div class="profile-grid">
+        <section class="panel profile-panel">
+          <h2>Details</h2>
+          <dl class="detail-list">
+            {% for label, value in fields %}<dt>{{ label }}</dt><dd>{{ value or "—" }}</dd>{% endfor %}
+          </dl>
+        </section>
+        <section class="panel profile-panel">
+          <h2>Change password</h2>
+          <form id="password-form" class="stack-form">
+            <label for="current-password">Current password</label>
+            <input id="current-password" type="password" autocomplete="current-password" required>
+            <label for="new-password">New password</label>
+            <input id="new-password" type="password" autocomplete="new-password" minlength="8" required>
+            <label for="confirm-password">Confirm new password</label>
+            <input id="confirm-password" type="password" autocomplete="new-password" minlength="8" required>
+            <button class="button button-primary" type="submit">Change password</button>
+          </form>
+        </section>
+      </div>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+</body>
+</html>

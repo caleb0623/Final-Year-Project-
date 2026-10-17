@@ -1,0 +1,3 @@
+# Only needed once, for migrate_firebase.py
+-r requirements.txt
+firebase-admin>=6.0.0
